@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Transactions.Entities.Transaction>
+@{
+    ViewBag.Title = "Home Page";
+}
+@section Scripts {
+    @Styles.Render("~/Content/JqueryFileUpload/jquery.fileupload.css");
+
+    @Scripts.Render("~/Scripts/JqueryFileUpload/jquery.iframe-transport.js")
+    @Scripts.Render("~/Scripts/JQueryFileUpload/jquery.fileupload.js");
+    @Scripts.Render("~/Scripts/PageScripts/Index.js");
+
+}
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped tablesorter" id="tblComite">
+                    <thead>
+                        <tr>
+                            <th width="10%">IdTransacao</th>
+                            <th width="10%">Banco</th>
+                            <th width="40%">Conta</th>
+                            <th width="30%">Data</th>
+                            <th width="10%">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Account.BankId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Account.AccountId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DataPost)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Valor)</td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Importar Arquivo</span>
+                        <input id="fileupload" type="file" name="files[]" multiple>
+                    </span> 
+                    <div id="files" class="files"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
