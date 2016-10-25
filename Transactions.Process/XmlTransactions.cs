@@ -22,15 +22,15 @@ namespace Transactions.Process
         private List<string> TreatOfx(string encode, string file)
         {
             var txt = new List<string>(File.ReadAllLines(file));
-                
-            for (int c = 0; c <= 9; c++)
+
+            for (int c = 0; c <= 10; c++)
             {
                 txt.RemoveAt(0);
             }
             txt.Insert(0, "<?xml version=\"1.0\" encoding=\"" + encode + "\"?>");
             txt.Insert(1, "<OFX xmlns=\"http://www.w3.org/2001/XMLSchema\">");
-            
-            return txt; 
+
+            return txt;
         }
         /// <summary>
         /// Cria um novo xml adequado para ser desserializado

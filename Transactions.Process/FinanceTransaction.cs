@@ -17,6 +17,17 @@ namespace Transactions.Process
             return trsDalc.ListarTransacoes().ToList<Transaction>();
         }
 
+        public void DeleteAllTransaction()
+        {
+            TransactionDalc trsDalc = new TransactionDalc();
+            List<Transaction> trs = new List<Transaction>();
+            trs = trsDalc.ListarTransacoes().ToList<Transaction>();
+            foreach (var item in trs)
+            {
+                trsDalc.ExcluirTransacao(item.TransactionId);
+            }
+        }
+
         public List<Account> ListarAccount()
         {
             TransactionDalc trsDalc = new TransactionDalc();
