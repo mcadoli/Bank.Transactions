@@ -14,9 +14,15 @@ namespace Transactions.Persistence.EF.DALC
         {
             return this.ctx.Set<TEntity>();
         }
+
         public IQueryable<TEntity> Find<TEntity>(string nameClass) where TEntity : class
         {
             return this.ctx.Set<TEntity>().Include(nameClass);
+        }
+        public void Delete<TEntity>(TEntity entity) where TEntity : class
+        {
+            this.ctx.Set<TEntity>().Remove(entity);
+            this.ctx.SaveChanges();
         }
        
     }

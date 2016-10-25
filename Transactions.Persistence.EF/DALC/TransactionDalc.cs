@@ -19,7 +19,7 @@ namespace Transactions.Persistence.EF.DALC
             {
                 return baseDalc.Find<Transaction>().OrderBy(x => x.DataPost).ToList<Transaction>();
             }
-            
+
         }
 
         public List<Account> ListarAccounts()
@@ -31,15 +31,41 @@ namespace Transactions.Persistence.EF.DALC
         }
         public void SalvarTransacoes(List<Transaction> trs)
         {
+            
             foreach (var item in trs)
             {
                 using (var ctx = new TransactionsContext())
                 {
-                    ctx.Entry(item.Account).State = EntityState.Modified;
-                    ctx.Transactions.Add(item);
-                    ctx.SaveChanges();
+                    using (var ctxTransaction = ctx.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            ctx.Entry(item.Account).State = EntityState.Modified;
+                            ctx.Transactions.Add(item);
+                            ctx.SaveChanges();
+                            ctxTransaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            ctxTransaction.Rollback();
+                        }
+                    }
                 }
             }
+        }
+
+        public Transaction BuscarTransacaoPorId(string id)
+        {
+            using (var ctx = new TransactionsContext())
+            {
+                return baseDalc.Find<Transaction>().FirstOrDefault(x => x.TransactionId == id);
+            }
+        }
+
+        public void ExcluirTransacao(string id)
+        {
+            var tr = BuscarTransacaoPorId(id);
+            this.baseDalc.Delete(tr);
         }
     }
 }

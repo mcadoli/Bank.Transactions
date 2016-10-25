@@ -19,6 +19,7 @@ namespace Transactions.Persistence.EF
             
         }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
