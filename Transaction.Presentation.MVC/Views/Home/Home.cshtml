@@ -25,7 +25,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (var item in Model)
+                        @if((Model != null))
+                        {
+                            foreach (var item in Model)
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.TransactionId)</td>
@@ -35,6 +37,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.Valor)</td>
                                 </tr>
                             }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -44,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
@@ -54,6 +57,18 @@
                         <input id="fileupload" type="file" name="files[]" multiple>
                     </span> 
                     <div id="files" class="files"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    @using (Html.BeginForm("DeletarTransacoes", "Home", FormMethod.Post))
+                    {
+                        <input type="submit" value="Deletar Transações" class="btn btn-default" />
+                    }
                 </div>
             </div>
         </div>
